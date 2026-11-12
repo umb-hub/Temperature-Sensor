@@ -1,11 +1,9 @@
-# Example Lovelace card to add right after setup.
+# Example Lovelace card to add after installing the template sensor.
 # Settings > Dashboards > (your dashboard) > Edit > Add Card > Manual (YAML)
-# Replace entity id below with the one created by the integration
-# (Settings > Devices & Services > Temperature Sensor > Entities).
 type: statistics-graph
 title: Temperature
 entities:
-  - sensor.temperature
+  - sensor.temperature_sensor
 days_to_show: 7
 stat_types:
   - mean
