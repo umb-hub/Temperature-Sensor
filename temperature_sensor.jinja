@@ -1,0 +1,37 @@
+{#
+  Temperature Sensor — reusable Jinja macros for Home Assistant templates.
+  Install via HACS (category: template) -> lands in
+  config/custom_templates/temperature_sensor.jinja
+  Import in any template with:
+    {% from 'temperature_sensor.jinja' import outdoor_temperature_fahrenheit, celsius_to_fahrenheit, format_temperature, comfort_label %}
+
+  Suggested entity id: name your real sensor `sensor.temperature_sensor`
+  to use the entity-id helpers below without passing an argument.
+#}
+
+{% macro outdoor_temperature_fahrenheit(entity_id='sensor.temperature_sensor') -%}
+{{ celsius_to_fahrenheit(states(entity_id)) }}
+{%- endmacro %}
+
+{% macro celsius_to_fahrenheit(celsius) -%}
+{{ (celsius | float * 9 / 5 + 32) | round(1) }}
+{%- endmacro %}
+
+{% macro format_temperature(value, unit='°C') -%}
+{{ value | float | round(1) }}{{ unit }}
+{%- endmacro %}
+
+{% macro comfort_label(celsius) -%}
+{%- set value = celsius | float -%}
+{%- if value < 16 -%}
+Cold
+{%- elif value < 20 -%}
+Cool
+{%- elif value < 26 -%}
+Comfortable
+{%- elif value < 30 -%}
+Warm
+{%- else -%}
+Hot
+{%- endif -%}
+{%- endmacro %}

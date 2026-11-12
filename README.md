@@ -1,35 +1,50 @@
-# Temperature Sensor (Home Assistant Template Sensor)
+# Temperature Sensor (HACS template)
 
-Template sensor — derives a temperature value from an existing
-entity/attribute via Jinja2. No Python, no `custom_components`, no HACS.
+HACS **template** category repository: distributes reusable Jinja2
+macros for Home Assistant templates — not an integration, not a sensor
+entity. HACS installs `temperature_sensor.jinja` into
+`config/custom_templates/` automatically.
 
-## Install
+## Macros
 
-1. Edit [`packages/temperature_sensor.yaml`](packages/temperature_sensor.yaml):
-   replace `sensor.SOURCE_ENTITY` with your real source entity (another
-   sensor, a weather entity attribute, an MQTT topic sensor, etc.).
-2. Include it in `configuration.yaml`:
-   - If using [packages](https://www.home-assistant.io/docs/configuration/packages/):
-     drop the file in your `packages/` folder — picked up automatically.
-   - Otherwise: `template: !include packages/temperature_sensor.yaml`
-     (only works if you don't already have another top-level `template:`
-     key — merge the `sensor:` list into it if you do).
-3. Restart Home Assistant, or reload without restarting: Developer
-   Tools → YAML → **Reload All** (or just the "Template Entities" entry).
+| Macro | Description |
+|---|---|
+| `outdoor_temperature_fahrenheit(entity_id='sensor.temperature_sensor')` | Reads the given entity (defaults to the suggested id below) and converts it to °F directly. |
+| `celsius_to_fahrenheit(celsius)` | Converts a raw °C value to °F, rounded to 1 decimal. |
+| `format_temperature(value, unit='°C')` | Formats a number with a unit suffix. |
+| `comfort_label(celsius)` | Returns a comfort label: Cold/Cool/Comfortable/Warm/Hot. |
 
-This creates `sensor.temperature_sensor`.
+## Suggested entity name
 
-## Statistics graph visibility
+Name your real sensor **`sensor.temperature_sensor`** to use
+`outdoor_temperature_fahrenheit()` with no argument. Any other id still
+works, just pass it explicitly.
 
-- **Near-default, zero config:** the auto-generated "Overview" dashboard
-  already shows a mini history graph for the new sensor automatically.
-- **Full statistics-graph card (mean/min/max):** add it manually —
-  dashboard → Edit → Add Card → Manual (YAML) → paste
-  [`dashboards/example_card.yaml`](dashboards/example_card.yaml).
+## Usage
 
-## Structure
+In any Home Assistant template (automation, template sensor, script):
 
+```jinja
+{% from 'temperature_sensor.jinja' import outdoor_temperature_fahrenheit, celsius_to_fahrenheit, comfort_label %}
+{{ outdoor_temperature_fahrenheit() }}°F
+{{ celsius_to_fahrenheit(states('sensor.outdoor_temperature')) }}°F
+{{ comfort_label(states('sensor.outdoor_temperature')) }}
 ```
-packages/temperature_sensor.yaml   # the template sensor definition
-dashboards/example_card.yaml       # optional statistics-graph card
-```
+
+After HACS installs/updates the file it calls `reload_custom_templates`
+automatically — no restart needed. For manual install (no HACS), copy
+`temperature_sensor.jinja` into `config/custom_templates/` yourself and
+call `homeassistant.reload_custom_templates` once.
+
+## Dashboard note
+
+This repo creates no entity, so no statistics-graph/history card can
+show anything for it — macros can only be used inside a template-aware
+card (e.g. Markdown) to render a live computed value, no stored history.
+
+## Publishing requirements (HACS "template" category)
+
+- `temperature_sensor.jinja` at repo root (not in a subfolder).
+- `hacs.json` with `"filename"` matching that file exactly.
+- At least one GitHub release/tag.
+- Repo description + topic set for discoverability.

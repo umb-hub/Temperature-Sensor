@@ -1,0 +1,5 @@
+{
+  "name": "Temperature Sensor",
+  "filename": "temperature_sensor.jinja",
+  "render_readme": true
+}
