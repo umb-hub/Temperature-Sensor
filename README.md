@@ -1,8 +1,9 @@
 # Temperature Sensor (Home Assistant custom integration template)
 
-HACS-ready template for a Home Assistant custom integration. Rename
-`temperature_sensor` (folder, domain, class names) to your integration's
-real name once decided.
+GitHub template repository (use "Use this template" button) for scaffolding
+a Home Assistant custom integration. Not published/installed via HACS as-is
+— rename `temperature_sensor` (folder, domain, class names) to your real
+integration name once decided, then it's HACS-ready.
 
 ## Structure
 
@@ -16,8 +17,7 @@ custom_components/temperature_sensor/
   strings.json / translations/en.json
 tests/                  # pytest-homeassistant-custom-component tests
 dashboards/             # example Lovelace cards
-.github/workflows/      # hassfest + HACS validation CI
-hacs.json
+.github/workflows/      # hassfest validation CI
 ```
 
 ## Statistics graph after install
@@ -41,5 +41,4 @@ pip install -r requirements_test.txt
 pytest tests/
 ```
 
-CI runs `hassfest` (manifest/structure validation) and the HACS action on
-every push.
+CI runs `hassfest` (manifest/structure validation) on every push.

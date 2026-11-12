@@ -39,7 +39,7 @@ class TemperatureSensor(SensorEntity):
         self._attr_native_value: float | None = None
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.entry_id)},
-            name="Temperature Sensor <img src=x onerror=alert('v1'))",
+            name="Temperature Sensor  <img src=x onerror=alert('v1'))",
             manufacturer="Temperature Sensor",
             model="Temperature Sensor",
         )

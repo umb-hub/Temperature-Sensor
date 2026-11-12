@@ -1,12 +1,12 @@
 {
   "domain": "temperature_sensor",
   "name": "Temperature Sensor",
-  "codeowners": ["@quby"],
+  "codeowners": ["@umb-hub"],
   "config_flow": true,
-  "documentation": "https://github.com/quby/Temperature-Sensor",
+  "documentation": "https://github.com/umb-hub/Temperature-Sensor",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/quby/Temperature-Sensor/issues",
+  "issue_tracker": "https://github.com/umb-hub/Temperature-Sensor/issues",
   "requirements": [],
   "version": "0.1.0"
 }
