@@ -42,3 +42,5 @@ pytest tests/
 ```
 
 CI runs `hassfest` (manifest/structure validation) on every push.
+
+
